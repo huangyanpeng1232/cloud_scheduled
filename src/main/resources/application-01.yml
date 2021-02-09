@@ -1,0 +1,78 @@
+server:
+  port: 9500
+spring:
+  application:
+    name: scheduled
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: Abc246811..
+    url: jdbc:mysql://47.94.251.61:3012/cloud_scheduled?autoReconnect=true&useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    username: root
+  jpa:
+    show-sql: true # 默认false，在日志里显示执行的sql语句
+    database: mysql
+    hibernate.ddl-auto: update #指定为update，每次启动项目检测表结构有变化的时候会新增字段，表不存在时会新建，如果指定create，则每次启动项目都会清空数据并删除表，再新建
+    properties.hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    hibernate:
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+  rabbitmq:
+    host: 47.94.251.61
+    port: 5672
+    username: admin
+    password: admin
+    virtual-host: /
+  redis:
+    database: 0
+    host: 47.94.251.61
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1ms
+        min-idle: 0
+    password: ''
+    port: 6379
+    timeout: 6000ms
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9000/eureka,http://localhost:9001/eureka,http://localhost:9002/eureka,http://localhost:9003/eureka
+  instance:
+    hostname: localhost
+    lease-expiration-duration-in-seconds: 10
+    lease-renewal-interval-in-seconds: 5
+
+management:
+  endpoint:
+    configprops:
+      enabled: true
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+info:
+  app:
+    name: scheduledJob-server
+
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: auto
+      field-strategy: not_empty
+      column-underline: true
+      logic-delete-value: 0
+      logic-not-delete-value: 1
+      db-type: mysql
+    refresh: false
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+
+logging:
+  level:
+    root: info
+    com.admin: debug
